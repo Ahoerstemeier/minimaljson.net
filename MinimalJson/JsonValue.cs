@@ -9,25 +9,25 @@
  * Ralf Sternberg - initial implementation and API
  * Benestar - conversion into C#
  ******************************************************************************/
+
 using System;
 using System.Globalization;
 using System.IO;
 
 namespace MinimalJson
-{   
+{
     /// <summary>
     /// Represents a JSON value. According to RFC 4627, a JSON value must be an object, an array, a number, a string, or one of the literal names true, false, and null.
     /// The literal names true, false, and null are represented by the constants <see cref="TRUE"/>, <see cref="FALSE"/>, and <see cref="NULL"/>.
     /// JSON objects and arrays are represented by the subtypes <see cref="JsonObject"/> and <see cref="JsonArray"/>.
     /// Instances of these types can be created using the public constructors.
     /// Instances for JSON numbers and strings can be created using the static factory methods <see cref="valueOf(string)"/>, <see cref="valueOf(long)"/>, <see cref="valueOf(double)"/> , etc.
-    /// In order to find out whether an instance of this class is of a certain type, the methods <see cref="isObject()"/>, <see cref="isArray()"/>, <see cref="isString()"/>, <see cref="isNumber()"/> etc. can be used.
-    /// If there is no doubt about the type of a JSON value, one of the methods <see cref="asObject()"/>, <see cref="asArray()"/>, <see cref="asString("/>, <see cref="asInt()"/>, etc. can be used to get this value directly in the appropriate target type.
-    /// This class is not supposed to be extended by clients. 
+    /// In order to find out whether an instance of this class is of a certain type, the methods <see cref="isObject"/>, <see cref="isArray"/>, <see cref="isString"/>, <see cref="isNumber"/> etc. can be used.
+    /// If there is no doubt about the type of a JSON value, one of the methods <see cref="asObject"/>, <see cref="asArray"/>, <see cref="asString"/>, <see cref="asInt"/>, etc. can be used to get this value directly in the appropriate target type.
+    /// This class is not supposed to be extended by clients.
     /// </summary>
     public abstract class JsonValue
     {
-
         /// <summary>
         /// Represents the JSON literal <code>true</code>.
         /// </summary>
@@ -123,7 +123,7 @@ namespace MinimalJson
         /// <returns>a JSON value that represents the given value</returns>
         public static JsonValue valueOf(float value)
         {
-            if (float.IsInfinity(value) || float.IsNaN(value))
+            if ( float.IsInfinity(value) || float.IsNaN(value) )
             {
                 throw new ArgumentException("Infinite and NaN values not permitted in JSON", "value");
             }
@@ -137,7 +137,7 @@ namespace MinimalJson
         /// <returns>a JSON value that represents the given value</returns>
         public static JsonValue valueOf(double value)
         {
-            if (double.IsInfinity(value) || double.IsNaN(value))
+            if ( double.IsInfinity(value) || double.IsNaN(value) )
             {
                 throw new ArgumentException("Infinite and NaN values not permitted in JSON", "value");
             }
@@ -365,7 +365,7 @@ namespace MinimalJson
 
         private static string cutOffPointZero(string str)
         {
-            if (str.EndsWith(".0"))
+            if ( str.EndsWith(".0") )
             {
                 return str.Substring(0, str.Length - 2);
             }

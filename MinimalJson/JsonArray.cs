@@ -9,10 +9,11 @@
  *    Ralf Sternberg - initial implementation and API
  *    Benestar - conversion into C#
  ******************************************************************************/
+
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections;
 using System.IO;
 
 namespace MinimalJson
@@ -27,13 +28,12 @@ namespace MinimalJson
     ///     ...
     /// }
     /// </example>
-    /// An equivalent List can be obtained from the method <see cref="values()"/>.
+    /// An equivalent List can be obtained from the method <see cref="JsonValue.values"/>.
     /// Note that this class is not thread-safe. If multiple threads access a <code>JsonArray</code> instance concurrently, while at least one of these threads modifies the contents of this array, access to the instance must be synchronized externally. Failure to do so may lead to an inconsistent state.
     /// This class is <strong>not supposed to be extended</strong> by clients.
     /// </summary>
     public sealed class JsonArray : JsonValue, IEnumerable
     {
-
         private readonly IList<JsonValue> values;
 
         /// <summary>
@@ -48,15 +48,18 @@ namespace MinimalJson
         /// Creates a new JsonArray with the contents of the specified JSON array.
         /// </summary>
         /// <param name="array">the JsonArray to get the initial contents from, must not be <code>null</code></param>
-        public JsonArray(JsonArray array) : this(array, false) { }
+        public JsonArray(JsonArray array)
+            : this(array, false)
+        {
+        }
 
         private JsonArray(JsonArray array, bool unmodifiable)
         {
-            if (array == null)
+            if ( array == null )
             {
                 throw new ArgumentNullException("array");
             }
-            if (unmodifiable)
+            if ( unmodifiable )
             {
                 values = new ReadOnlyCollection<JsonValue>(array.values);
             }
@@ -176,7 +179,7 @@ namespace MinimalJson
         /// <exception cref="ArgumentNullException">if the value is <code>null</code></exception>
         public JsonArray add(JsonValue value)
         {
-            if (value == null)
+            if ( value == null )
             {
                 throw new ArgumentNullException("value is null");
             }
@@ -259,7 +262,7 @@ namespace MinimalJson
         /// <exception cref="ArgumentOutOfRangeException">if the index is out of range, i.e. <code>index &lt; 0</code> or <code>index >= size</code></exception>
         public JsonArray set(int index, JsonValue value)
         {
-            if (value == null)
+            if ( value == null )
             {
                 throw new ArgumentNullException("value");
             }
@@ -345,17 +348,22 @@ namespace MinimalJson
             return values.GetHashCode();
         }
 
+        /// <summary>
+        /// Compares this instance with <paramref name="obj"/>.
+        /// </summary>
+        /// <param name="obj">Object to compare with.</param>
+        /// <returns><c>true</c> is both objects have equal content, <c>false</c> otherwise.</returns>
         public override bool Equals(Object obj)
         {
-            if (this == obj)
+            if ( this == obj )
             {
                 return true;
             }
-            if (obj == null)
+            if ( obj == null )
             {
                 return false;
             }
-            if (this.GetType() != obj.GetType())
+            if ( this.GetType() != obj.GetType() )
             {
                 return false;
             }
@@ -363,6 +371,10 @@ namespace MinimalJson
             return this.ToString() == other.ToString();
         }
 
+        /// <summary>
+        /// Gets an enumerator to step through all the named json values.
+        /// </summary>
+        /// <returns>Enumerator to step through all the named json values.</returns>
         public IEnumerator GetEnumerator()
         {
             return values.GetEnumerator();

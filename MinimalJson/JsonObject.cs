@@ -9,10 +9,11 @@
  *    Ralf Sternberg - initial implementation and API
  *    Benestar - conversion into C#
  ******************************************************************************/
+
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections;
 using System.IO;
 
 namespace MinimalJson
@@ -35,7 +36,6 @@ namespace MinimalJson
     /// </summary>
     public sealed class JsonObject : JsonValue, IEnumerable
     {
-
         private IDictionary<string, JsonValue> values;
 
         /// <summary>
@@ -50,15 +50,18 @@ namespace MinimalJson
         /// Creates a new JsonObject, initialized with the contents of the specified JSON object.
         /// </summary>
         /// <param name="obj">the JSON object to get the initial contents from, must not be <code>null</code></param>
-        public JsonObject(JsonObject obj) : this(obj, false) { }
+        public JsonObject(JsonObject obj)
+            : this(obj, false)
+        {
+        }
 
         private JsonObject(JsonObject obj, bool unmodifiable)
         {
-            if (obj == null)
+            if ( obj == null )
             {
                 throw new ArgumentNullException("obj");
             }
-            if (unmodifiable)
+            if ( unmodifiable )
             {
                 values = new ReadOnlyDictionary<string, JsonValue>(obj.values);
             }
@@ -70,8 +73,14 @@ namespace MinimalJson
 
         public JsonValue this[string name]
         {
-            get { return values[name]; }
-            set { values[name] = value; }
+            get
+            {
+                return values[name];
+            }
+            set
+            {
+                values[name] = value;
+            }
         }
 
         /// <summary>
@@ -191,7 +200,7 @@ namespace MinimalJson
         /// <exception cref="ArgumentNullException">if the value is <code>null</code></exception>
         public JsonObject add(string name, JsonValue value)
         {
-            if (value == null)
+            if ( value == null )
             {
                 throw new ArgumentNullException("value");
             }
@@ -287,7 +296,7 @@ namespace MinimalJson
         /// <exception cref="ArgumentNullException">if the value is <code>null</code></exception>
         public JsonObject set(string name, JsonValue value)
         {
-            if (value == null)
+            if ( value == null )
             {
                 throw new ArgumentNullException("value");
             }
@@ -363,17 +372,22 @@ namespace MinimalJson
             return values.GetHashCode();
         }
 
-        public override bool Equals(object obj)
+        /// <summary>
+        /// Compares this instance with <paramref name="obj"/>.
+        /// </summary>
+        /// <param name="obj">Object to compare with.</param>
+        /// <returns><c>true</c> is both objects have equal content, <c>false</c> otherwise.</returns>
+        public override bool Equals(Object obj)
         {
-            if (this == obj)
+            if ( this == obj )
             {
                 return true;
             }
-            if (obj == null)
+            if ( obj == null )
             {
                 return false;
             }
-            if (this.GetType() != obj.GetType())
+            if ( this.GetType() != obj.GetType() )
             {
                 return false;
             }
@@ -381,9 +395,13 @@ namespace MinimalJson
             return this.ToString() == other.ToString();
         }
 
+        /// <summary>
+        /// Gets an enumerator to step through all the named json values.
+        /// </summary>
+        /// <returns>Enumerator to step through all the named json values.</returns>
         public IEnumerator GetEnumerator()
         {
-            foreach (KeyValuePair<string, JsonValue> member in values)
+            foreach ( KeyValuePair<String, JsonValue> member in values )
             {
                 yield return new Member(member.Key, member.Value);
             }
@@ -397,12 +415,20 @@ namespace MinimalJson
             /// <summary>
             /// The name of this member
             /// </summary>
-            public string name { get; private set; }
+            public string name
+            {
+                get;
+                private set;
+            }
 
             /// <summary>
             /// The value of this member
             /// </summary>
-            public JsonValue value { get; private set; }
+            public JsonValue value
+            {
+                get;
+                private set;
+            }
 
             internal Member(string name, JsonValue value)
             {
