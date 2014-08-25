@@ -48,7 +48,12 @@ namespace MinimalJson
             // prevent subclasses outside of this package
         }
 
-        public JsonValue this[string name]
+        /// <summary>
+        /// Gets or sets the named json value.
+        /// </summary>
+        /// <param name="name">Name of the json value</param>
+        /// <returns>Value object.</returns>
+        public JsonValue this[String name]
         {
             get
             {
@@ -60,6 +65,11 @@ namespace MinimalJson
             }
         }
 
+        /// <summary>
+        /// Gets or sets the json value by index.
+        /// </summary>
+        /// <param name="i">Index of the json value</param>
+        /// <returns>Value object.</returns>
         public JsonValue this[int i]
         {
             get
@@ -345,6 +355,10 @@ namespace MinimalJson
             return stringWriter.ToString();
         }
 
+        /// <summary>
+        /// Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode()
         {
             return base.GetHashCode();

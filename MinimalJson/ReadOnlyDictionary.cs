@@ -148,17 +148,31 @@ public class ReadOnlyDictionary<TKey, TValue> : IDictionary<TKey, TValue>
         throw ReadOnlyException();
     }
 
-    public bool Contains(KeyValuePair<TKey, TValue> item)
+    /// <summary>
+    /// Checks whether a given keyvalue pair is within the dictionary.
+    /// </summary>
+    /// <param name="item">Keyvaluepair to find.</param>
+    /// <returns><c>true</c> if found in dictionary, <c>false</c>c> otherwise.</returns>
+    public Boolean Contains(KeyValuePair<TKey, TValue> item)
     {
         return _dictionary.Contains(item);
     }
 
-    public void CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
+    /// <summary>
+    /// Copies the elements of the <paramref name="array"/> to the dictionary, starting at <paramref name="arrayIndex"/>.
+    /// </summary>
+    /// <param name="array">Array to copy data from.</param>
+    /// <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
+    public void CopyTo(KeyValuePair<TKey, TValue>[] array, Int32 arrayIndex)
     {
         _dictionary.CopyTo(array, arrayIndex);
     }
 
-    public int Count
+    /// <summary>
+    /// Gets the number of entries in the dictionary.
+    /// </summary>
+    /// <value>Number of entries.</value>
+    public Int32 Count
     {
         get
         {
@@ -166,7 +180,11 @@ public class ReadOnlyDictionary<TKey, TValue> : IDictionary<TKey, TValue>
         }
     }
 
-    public bool IsReadOnly
+    /// <summary>
+    /// Gets whether the dictionary is read only.
+    /// </summary>
+    /// <value><c>true</c> if dictionary is read only, <c>false</c> otherwise.</value>
+    public Boolean IsReadOnly
     {
         get
         {
@@ -183,6 +201,10 @@ public class ReadOnlyDictionary<TKey, TValue> : IDictionary<TKey, TValue>
 
     #region IEnumerable<KeyValuePair<TKey,TValue>> Members
 
+    /// <summary>
+    /// Gets an enumerator on the keyvalue pairs.
+    /// </summary>
+    /// <returns>Enumerator for the keyvalue pairs.</returns>
     public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
     {
         return _dictionary.GetEnumerator();

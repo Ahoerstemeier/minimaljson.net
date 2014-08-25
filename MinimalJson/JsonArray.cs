@@ -28,7 +28,7 @@ namespace MinimalJson
     ///     ...
     /// }
     /// </example>
-    /// An equivalent List can be obtained from the method <see cref="JsonValue.values"/>.
+    /// An equivalent List can be obtained from the method <see cref="JsonValue.asArray"/>.
     /// Note that this class is not thread-safe. If multiple threads access a <code>JsonArray</code> instance concurrently, while at least one of these threads modifies the contents of this array, access to the instance must be synchronized externally. Failure to do so may lead to an inconsistent state.
     /// This class is <strong>not supposed to be extended</strong> by clients.
     /// </summary>
@@ -333,16 +333,28 @@ namespace MinimalJson
             writer.writeArray(this);
         }
 
+        /// <summary>
+        /// Detects whether this value represents a JSON array. If this is the case, this value is an instance of <see cref="JsonArray"/>.
+        /// </summary>
+        /// <returns><code>true</code> if this value is an instance of JsonArray</returns>
         public override bool isArray()
         {
             return true;
         }
 
+        /// <summary>
+        /// Returns this JSON value as <see cref="JsonArray"/>, assuming that this value represents a JSON array. If this is not the case, an exception is thrown.
+        /// </summary>
+        /// <returns>A JSONArray for this value</returns>
         public override JsonArray asArray()
         {
             return this;
         }
 
+        /// <summary>
+        /// Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
         public override int GetHashCode()
         {
             return values.GetHashCode();

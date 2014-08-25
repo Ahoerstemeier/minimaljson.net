@@ -71,7 +71,12 @@ namespace MinimalJson
             }
         }
 
-        public JsonValue this[string name]
+        /// <summary>
+        /// Gets or sets the named json value.
+        /// </summary>
+        /// <param name="name">Name of the json value.</param>
+        /// <returns>Value object.</returns>
+        public new JsonValue this[String name]
         {
             get
             {
@@ -347,7 +352,7 @@ namespace MinimalJson
         /// Returns a list of the names in this object in document order. It cannot be used to modify this object.
         /// </summary>
         /// <returns>a list of the names in this object</returns>
-        public ICollection<string> names()
+        public ICollection<String> names()
         {
             return values.Keys;
         }
@@ -357,17 +362,29 @@ namespace MinimalJson
             writer.writeObject(this);
         }
 
-        public override bool isObject()
+        /// <summary>
+        /// Detects whether this value represents a JSON object. If this is the case, this value is an instance of <see cref="JsonObject"/>.
+        /// </summary>
+        /// <returns><code>true</code> if this value is an instance of JsonObject</returns>
+        public override Boolean isObject()
         {
             return true;
         }
 
+        /// <summary>
+        /// Returns this JSON value as <see cref="JsonObject"/>.
+        /// </summary>
+        /// <returns>The JsonObject of this instance.</returns>
         public override JsonObject asObject()
         {
             return this;
         }
 
-        public override int GetHashCode()
+        /// <summary>
+        /// Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>A hash code for the current object.</returns>
+        public override Int32 GetHashCode()
         {
             return values.GetHashCode();
         }
@@ -377,7 +394,7 @@ namespace MinimalJson
         /// </summary>
         /// <param name="obj">Object to compare with.</param>
         /// <returns><c>true</c> is both objects have equal content, <c>false</c> otherwise.</returns>
-        public override bool Equals(Object obj)
+        public override Boolean Equals(Object obj)
         {
             if ( this == obj )
             {
@@ -415,7 +432,7 @@ namespace MinimalJson
             /// <summary>
             /// The name of this member
             /// </summary>
-            public string name
+            public String name
             {
                 get;
                 private set;
@@ -430,7 +447,7 @@ namespace MinimalJson
                 private set;
             }
 
-            internal Member(string name, JsonValue value)
+            internal Member(String name, JsonValue value)
             {
                 this.name = name;
                 this.value = value;
